@@ -2,8 +2,8 @@
 Graduation Project
 Backend, API for authenticating users and saving articles'
 
+V 0.0.2
 
-V 0.0.4
 
 http://api.news-explorer-pr.tk
 https://api.news-explorer-pr.tk
@@ -29,6 +29,7 @@ example:
 
 NODE_ENV=production   //NODE_ENV=development
 JWT_SECRET=12345
+URL_DB = mongodb://localhost:27017/newsExplorerdb
 ```
 
 
@@ -45,100 +46,12 @@ npm run dev (hot reload)
 ```
 
 
-### Method:
-`GET` | `POST` | `DELETE` | `PUT` | `PATCH`
+### Methods:
+`GET` | `POST` | `DELETE` |
 
 
 **Requests:**
 ----
-## * GET /cards
-
-### **Success Response:**
-
-  * **Code:** 200 <br />
-    **Content:** `{ data : {} }`
-
-### **Error Response:**
-
-  * **Code:** 401 Unauthorized <br />
-    **Content:** `{ message : err }`
-
-  * **Code:** 500 InternalServerError <br />
-    **Content:** `{ message : err }`
-
-
-## * GET /users
-
-### **Success Response:**
-
-  * **Code:** 200 <br />
-    **Content:** `{ data : {} }`
-
-### **Error Response:**
-
-  * **Code:** 401 Unauthorized <br />
-    **Content:** `{ message : err }`
-
-  * **Code:** 500 InternalServerError <br />
-    **Content:** `{ message : err }`
-
-
-## * GET /users/:userId
-
-### **Success Response:**
-
-  * **Code:** 200 <br />
-    **Content:** `{ data : user }`
-
-### **Error Response:**
-
-  * **Code:** 401 Unauthorized <br />
-    **Content:** `{ message : err }`
-
-  * **Code:** 404 NotFoundError <br />
-    **Content:** `{ message : err }`
-
-  * **Code:** 500 InternalServerError <br />
-    **Content:** `{ message : err }`
-
-
-## * POST /users
-
-### **Success Response:**
-
-  * **Code:** 200 <br />
-    **Content:** `{ data : user }`
-
-### **Error Response:**
-
-  * **Code:** 401 Unauthorized <br />
-    **Content:** `{ message : err }`
-
-  * **Code:** 400 ValidationError <br />
-    **Content:** `{ message : err }`
-
-  * **Code:** 500 InternalServerError <br />
-    **Content:** `{ message : err }`
-
-
-## * POST /cards
-
-### **Success Response:**
-
-  * **Code:** 200 <br />
-    **Content:** `{ data : card }`
-
-### **Error Response:**
-
-  * **Code:** 401 Unauthorized <br />
-    **Content:** `{ message : err }`
-
-  * **Code:** 400 ValidationError <br />
-    **Content:** `{ message : err }`
-
-  * **Code:** 500 InternalServerError <br />
-    **Content:** `{ message : err }`
-
 
 ## * POST /signup
 
@@ -152,6 +65,9 @@ npm run dev (hot reload)
   * **Code:** 400 ValidationError <br />
     **Content:** `{ message : err }`
 
+  * **Code:** 409 ConflictError <br />
+    **Content:** `{ message : err }`
+
   * **Code:** 500 InternalServerError <br />
     **Content:** `{ message : err }`
     
@@ -162,8 +78,6 @@ npm run dev (hot reload)
 
   * **Code:** 201 <br />
     **Content:** `{ data : user }`
-   
-  * **Code:** 401 <br />
     **Content:** cookie (jwt)
 
 ### **Error Response:**
@@ -175,14 +89,17 @@ npm run dev (hot reload)
     **Content:** `{ message : err }`
 
 
-## * DELETE /cards/:cardId
+## * GET /users/me
 
 ### **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** `{ data : card }`
+    **Content:** `{ data : user }`
 
 ### **Error Response:**
+
+  * **Code:** 400 СastError <br />
+    **Content:** `{ message : err }`
 
   * **Code:** 401 Unauthorized <br />
     **Content:** `{ message : err }`
@@ -197,76 +114,60 @@ npm run dev (hot reload)
     **Content:** `{ message : err }`
 
 
-## * DELETE /cards/:cardId/likes
+## * GET /articles
 
 ### **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** `{ data : card }`
+    **Content:** `{ data : {} }`
 
 ### **Error Response:**
 
   * **Code:** 401 Unauthorized <br />
     **Content:** `{ message : err }`
 
-  * **Code:** 404 NotFoundError <br />
-    **Content:** `{ message : err }`
-
   * **Code:** 500 InternalServerError <br />
     **Content:** `{ message : err }`
 
 
-## * PUT /cards/:cardId/likes
+## * POST /articles
 
 ### **Success Response:**
 
-  * **Code:** 200 <br />
-    **Content:** `{ data : card }`
+  * **Code:** 201 <br />
+    **Content:** `{ data : article }`
 
 ### **Error Response:**
 
-  * **Code:** 401 Unauthorized <br />
-    **Content:** `{ message : err }`
-
-  * **Code:** 404 NotFoundError <br />
-    **Content:** `{ message : err }`
-
-  * **Code:** 500 InternalServerError <br />
+  * **Code:** 400 ValidationError <br />
     **Content:** `{ message : err }`
     
-
-## * PATCH /users/me
-
-### **Success Response:**
-
-  * **Code:** 200 <br />
-    **Content:** `{ data : user }`
-
-### **Error Response:**
-
   * **Code:** 401 Unauthorized <br />
-    **Content:** `{ message : err }`
-
-  * **Code:** 403 ForbiddenError <br />
     **Content:** `{ message : err }`
 
   * **Code:** 500 InternalServerError <br />
     **Content:** `{ message : err }`
 
 
-## * PATCH /users/me/avatar
+## * DELETE /articles/:articleId
 
 ### **Success Response:**
 
   * **Code:** 200 <br />
-    **Content:** `{ data : user }`
+    **Content:** `{ data : article }`
 
 ### **Error Response:**
+
+  * **Code:** 400 СastError <br />
+    **Content:** `{ message : err }`
 
   * **Code:** 401 Unauthorized <br />
     **Content:** `{ message : err }`
 
   * **Code:** 403 ForbiddenError <br />
+    **Content:** `{ message : err }`
+
+  * **Code:** 404 NotFoundError <br />
     **Content:** `{ message : err }`
 
   * **Code:** 500 InternalServerError <br />

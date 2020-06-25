@@ -22,7 +22,7 @@ const createArticle = async (req, res, next) => {
       const article = await Article.create({
         keyword, title, text, date, source, link, image, owner: req.user._id,
       });
-      // GH
+
       res.status(201).send({ data: article.omitPrivate() });
     } catch (err) {
       if (err.name === 'ValidationError') {

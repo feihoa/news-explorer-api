@@ -6,17 +6,12 @@ const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 
 const helmet = require('helmet');
+const limiter = require('./limiter');
 
-const rateLimit = require('express-rate-limit');
-const errorHandler = require('./errors/errorHandler');
+const errorHandler = require('./middlewares/errorHandler');
 const { validateSignIn, validateSignUp } = require('./celebrateSchemas');
 
 const NotFoundError = require('./errors/not-found-err');
-
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-});
 
 const router = require('./routes/index');
 
@@ -31,21 +26,21 @@ require('dotenv').config();
 const { NODE_ENV = 'development' } = process.env;
 console.log(NODE_ENV);
 
+const { URL_DB = 'mongodb://localhost:27017/newsExplorerdb' } = process.env;
+
 const app = express();
 
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
-mongoose.connect('mongodb://localhost:27017/newsExplorerdb', {
+mongoose.connect(URL_DB, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
 
 });
-console.log(process.env.MONGO_URI);
 
 app.use(requestLogger);
 app.use(helmet());
