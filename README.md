@@ -1,6 +1,6 @@
 # news-explorer-api
 Graduation Project
-Backend, API for authenticating users and saving articles'
+Backend, API for authenticating users and saving articles
 
 V 0.0.2
 
@@ -8,7 +8,7 @@ V 0.0.2
 http://api.news-explorer-pr.tk
 https://api.news-explorer-pr.tk
 
-http://84.201.149.64/
+http://84.201.145.27/
 
 
 
