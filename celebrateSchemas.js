@@ -2,7 +2,7 @@ const { celebrate, Joi } = require('celebrate');
 
 const { default: validator } = require('validator');
 
-// signin / signup
+// signin
 
 const validateSignIn = celebrate({
   body: Joi.object().keys({
@@ -19,6 +19,8 @@ const validateSignIn = celebrate({
   }).unknown(),
 });
 
+// signup
+
 const validateSignUp = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
@@ -31,7 +33,8 @@ const validateSignUp = celebrate({
   }).unknown(),
 });
 
-// users / articles
+// users
+// articles
 
 const validateHeaders = celebrate({
   headers: Joi.object().keys({
@@ -43,7 +46,6 @@ const validateHeaders = celebrate({
 
 const validateCreateArticle = celebrate({
   body: Joi.object().keys({
-    // keyword, title, text, date, source, link и image
     keyword: Joi.string().required().min(2).max(30),
     title: Joi.string().required().min(2),
     text: Joi.string().required().min(2),

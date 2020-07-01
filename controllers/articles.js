@@ -39,7 +39,7 @@ const createArticle = async (req, res, next) => {
 const deleteArticle = async (req, res, next) => {
   try {
     try {
-      const article = await Article.findById(req.params.articleId).select('keyword title text date source image source link owner')
+      const article = await Article.findById(req.params.articleId).select('+owner')
         .orFail(() => {
           throw new NotFoundError('Нет статьи с таким id');
         });
