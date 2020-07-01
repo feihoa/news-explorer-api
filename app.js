@@ -23,6 +23,8 @@ const auth = require('./middlewares/auth');
 
 require('dotenv').config();
 
+if (process.env.NODE_ENV !== 'production') { process.env.NODE_ENV = 'development'; }
+
 const { URL_DB = 'mongodb://localhost:27017/newsExplorerdb' } = process.env;
 
 const app = express();
