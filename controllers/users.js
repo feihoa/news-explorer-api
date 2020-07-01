@@ -70,7 +70,7 @@ const login = async (req, res, next) => {
     const token = jwt.sign(
       { _id: user._id },
       NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
-      );
+    );
     res.status(201);
     res.cookie('jwt', token, {
       expire: '7d',
