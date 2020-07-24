@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
 const { errors } = require('celebrate');
@@ -28,6 +29,17 @@ if (process.env.NODE_ENV !== 'production') { process.env.NODE_ENV = 'development
 const { URL_DB = 'mongodb://localhost:27017/newsExplorerdb' } = process.env;
 
 const app = express();
+
+const corsOptions = {
+  origin:['https://api.news-explorer-pr.tk','http://localhost:8080'],
+  methods:['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  preflightContinue: true,
+  optionsSuccessStatus: 204,
+  allowedHeaders:['Content-Type', 'x-requested-with', 'origin', 'accept', 'x-access-token', 'Authorization'],
+  credentials: true
+}
+
+app.use('*', cors(corsOptions));
 
 app.use(cookieParser());
 app.use(bodyParser.json());
