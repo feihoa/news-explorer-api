@@ -4,6 +4,12 @@ const ForbiddenError = require('../errors/forbidden-err');
 const СastError = require('../errors/cast-err');
 const ValidationError = require('../errors/validation-err');
 
+const {
+  noCard,
+  forbidden,
+  wrongId,
+} = require('../constants/constants.js');
+
 const getArticles = async (req, res, next) => {
   try {
     const articles = await Article.find({ owner: req.user._id });
@@ -41,17 +47,17 @@ const deleteArticle = async (req, res, next) => {
     try {
       const article = await Article.findById(req.params.articleId).select('+owner')
         .orFail(() => {
-          throw new NotFoundError('Нет статьи с таким id');
+          throw new NotFoundError(noCard);
         });
       if (article.owner.toString() === req.user._id) {
         const removedArticle = await article.remove();
         res.send({ data: removedArticle.omitPrivate() });
       } else {
-        throw new ForbiddenError('Доступ запрещен');
+        throw new ForbiddenError(forbidden);
       }
     } catch (err) {
       if (err.name === 'CastError') {
-        throw new СastError('Неверный id');
+        throw new СastError(wrongId);
       } else {
         next(err);
       }

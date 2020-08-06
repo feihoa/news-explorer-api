@@ -1,6 +1,9 @@
 const { celebrate, Joi } = require('celebrate');
-
 const { default: validator } = require('validator');
+const {
+  wrongEmail,
+  wrongLink,
+} = require('./constants/constants.js');
 
 // signin
 
@@ -10,7 +13,7 @@ const validateSignIn = celebrate({
       if (validator.isURL(value)) {
         return value;
       }
-      return helpers.message('Поле "email" заполнено некоректно');
+      return helpers.message(wrongEmail);
     }),
     password: Joi.string().required().min(8),
   }),
@@ -55,13 +58,13 @@ const validateCreateArticle = celebrate({
       if (validator.isURL(value)) {
         return value;
       }
-      return helpers.message('Поле "link" заполнено некоректно');
+      return helpers.message(wrongLink);
     }),
     image: Joi.string().required().min(2).custom((value, helpers) => {
       if (validator.isURL(value)) {
         return value;
       }
-      return helpers.message('Поле "image" заполнено некоректно');
+      return helpers.message(wrongLink);
     }),
   }),
 });

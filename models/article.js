@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const isURL = require('validator/lib/isURL');
+const { wrongLink } = require('../constants/constants.js');
 
 const articleSchema = new mongoose.Schema({
   keyword: {
@@ -27,7 +28,7 @@ const articleSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: isURL,
-      message: 'Неправильный формат ссылки',
+      message: wrongLink,
     },
   },
   image: {
@@ -35,7 +36,7 @@ const articleSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: isURL,
-      message: 'Неправильный формат ссылки',
+      message: wrongLink,
     },
   },
   owner: {
