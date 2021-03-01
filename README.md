@@ -14,7 +14,7 @@ http://84.201.168.59/
 
 ## Installation
 ```bash
-git clone https://github.com/Maliiya/news-explorer-api.git
+git clone https://github.com/feihoa/news-explorer-api.git
 ```
 
 
